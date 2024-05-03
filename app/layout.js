@@ -2,9 +2,10 @@ import { Roboto } from "next/font/google";
 import { Inter } from 'next/font/google'
 // import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import './globals.css'
-import "react-datepicker/dist/react-datepicker.css";
+
 
 import TopNav from './components/Nav/TopNav'
+import ToastContainerWrapper from "./components/ToastContainerWrapper";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,13 +15,18 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  if (!process.env.NEXT_PUBLIC_API_URL) return null;
+
+
   return (
     <html lang="en">
       <body className={inter.className + " px-4 md:xl:px-16  min-h-screen flex flex-col  "}>
 
       <TopNav />
         {children}
-        </body>
+
+        <ToastContainerWrapper/>
+                </body>
     </html>
   )
 }

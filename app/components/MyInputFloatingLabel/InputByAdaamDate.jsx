@@ -5,6 +5,7 @@ export default function InputByAdaamDate({
   Label = '', Name = 'InputField',
   ValFormat = 'd MMM yy',
   Val = '', setVal,
+  ReadOnly = false,
   // CSS4Input = " h-10 w-full border-b-2 border-gray-300 text-gray-900  focus:border-rose-600 focus:outline-none",
   // CSS4Label = "-top-3.5 left-0 text-sm  text-gray-600  peer-placeholder-shown:top-2  peer-placeholder-shown:text-base  peer-placeholder-shown:text-gray-400  peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600 "
 

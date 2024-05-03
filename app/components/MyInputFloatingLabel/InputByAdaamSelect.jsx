@@ -14,6 +14,8 @@ export default function InputByAdaamSelect({
   Val = '', setVal,
   TextKey = 'Label',
   ValueKey = 'Value',
+
+  ReadOnly = false,
   Options,
   OptionKeys = ['Label', 'Value', 'Label'],
   OptionsBoxHeight = '400px',
@@ -132,10 +134,10 @@ export default function InputByAdaamSelect({
 
       {/* Options List for Select */}
       {/* <ul className={`absolute min-w-full z-50 text-left bg-white mt-[2px] rounded-md border shadow-lg ${open ? "max-h-96" : "max-h-0"} overflow-y-auto  overflow-x-hidden`}  > */}
-      <ul  tabindex={-1} className={` absolute min-w-full z-50 text-left bg-white mt-[2px] rounded-md border shadow-lg ${open ? "max-h-[" + OptionsBoxHeight + "]" : " hidden "} overflow-y-auto  overflow-x-hidden`}  >
+      <ul tabindex={-1} className={` absolute min-w-full z-50 text-left bg-white mt-[2px] rounded-md border shadow-lg ${open ? "max-h-[" + OptionsBoxHeight + "]" : " hidden "} overflow-y-auto  overflow-x-hidden`}  >
 
         {/* Search box Select */}
-        <div  className="flex items-center px-2 sticky top-0 bg-white">
+        <div className="flex items-center px-2 sticky top-0 bg-white">
           {/* <span className="text-gray-700" > <AiOutlineSearch /></span> */}
           <AiOutlineSearch />
 
@@ -143,7 +145,7 @@ export default function InputByAdaamSelect({
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value.toLowerCase())}
-
+            readOnly={ReadOnly}
             placeholder={TextSearch}     //"Enter Search Option"
             className="placeholder:text-gray-400 p-2 outline-none grow "
           // className={" placeholder-transparent "}
