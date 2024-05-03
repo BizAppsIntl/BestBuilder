@@ -1,4 +1,3 @@
-import { prisma } from '@/prisma/config/prisma'
 import { NextResponse } from 'next/server'
 
 import dbConnect from '@/app/api/mongoDB_conn'
@@ -11,7 +10,7 @@ export async function GET() {
   // const connection = mongoose.createConnection('mongodb://127.0.0.1:27017/test');
   dbConnect()
   console.log(`\n\n**********************************************************************
-               \n\Making GET Request for Tables from PRISMA \nat: ${new Date().toLocaleString()}] \n`)
+               \n\Making GET Request for Tables from \nat: ${new Date().toLocaleString()}] \n`)
 
             //    try {
             //     await mongoose.connect(process.env.MONGO_URL, {
