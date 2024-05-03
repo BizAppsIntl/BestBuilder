@@ -21,11 +21,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className + " px-4 md:xl:px-16  min-h-screen flex flex-col  "}>
+        <ToastContainerWrapper/>
 
         <TopNav />
         {children}
 
-        <ToastContainerWrapper />
       </body>
     </html>
   )
