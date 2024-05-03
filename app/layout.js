@@ -4,8 +4,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 
 
-import TopNav from './components/Nav/TopNav'
-import ToastContainerWrapper from "./components/ToastContainerWrapper";
+import TopNav from '@/app/components/Nav/TopNav'
+import ToastContainerWrapper from "@/app/components/ToastContainerWrapper";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,11 +22,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className + " px-4 md:xl:px-16  min-h-screen flex flex-col  "}>
 
-      <TopNav />
+        <TopNav />
         {children}
 
-        <ToastContainerWrapper/>
-                </body>
+        <ToastContainerWrapper />
+      </body>
     </html>
   )
 }
