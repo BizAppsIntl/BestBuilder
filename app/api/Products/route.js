@@ -15,7 +15,8 @@ export async function GET() {
 
   try {
     const rows = await ModelProduct.find()
-    console.log('\nFetched Data: ', rows, ' DataLength: ', rows?.length, ' rows? true: false => ', rows.length > 0 ? 'true' : 'false')
+    // console.log('\nFetched Data: ', rows, ' DataLength: ', rows?.length, ' rows? true: false => ', rows.length > 0 ? 'true' : 'false')
+    console.log('\nFetched Data Rows: ', 'rows', ' DataLength: ', rows?.length, ' rows? true: false => ', rows.length > 0 ? 'true' : 'false')
     return NextResponse.json(rows?.length > 0 ? rows : [])
 
   }
@@ -28,7 +29,9 @@ export async function GET() {
 
 
 
-
+// ==============================================================
+//-----------[        POST Request to Get Rec - By Text/Title        ]
+// ==============================================================
 export async function POST(req, param) {
   // const connection = mongoose.createConnection('mongodb://127.0.0.1:27017/test');
 
@@ -39,12 +42,15 @@ export async function POST(req, param) {
   console.log('\nMODEL: ', ModelProduct)
 
   const body = await req.json()
-  console.log('\nReceived Data: ', body)
+  console.log('\nReceived Data for POSTING int DatabaseTable: ', body.Data)
 
   try {
 
-    const rec = new ModelProduct(body)
-    rec.save()
+    // const rec = new ModelProduct(body)
+    // rec.save()
+    const rec = await ModelProduct.create(body.Data)
+    console.log('\nDB Response after SavingNewRecord: ', rec)
+
     return NextResponse.json({ message: 'Rec Saved', rec: rec })
 
   }

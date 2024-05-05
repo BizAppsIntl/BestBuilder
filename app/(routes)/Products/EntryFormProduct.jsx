@@ -17,7 +17,7 @@ import { Input } from 'postcss'
 import { TbWiperWash } from 'react-icons/tb'
 import { VscSaveAs } from 'react-icons/vsc'
 import { CgCloseO } from 'react-icons/cg'
-import MyToast from '@/app/components/MyToast/MyToast'
+
 import { FaUserPlus } from 'react-icons/fa'
 import { Button, Modal } from 'flowbite-react'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
@@ -33,23 +33,24 @@ export default function Page(props) {
   // const { VoucherMode, CrntRec, Categories, HandleBtnVoucherMode } = props
   const { VoucherMode, CrntRec, Categories, HandleBtnClickedMode } = props
 
+  
   // const [Rec, setRec] = useState({ REC })
-
+  
   const [OrderSheet, setOrderSheet] = useState(CrntRec ? CrntRec : '')
   const [Need2Refresh, setNeed2Refresh] = useState(false);
   const [OpenModal4Del, setOpenModal4Del] = useState(false);
-
-
+  
+  
   useEffect(() => {
-    // if (!VoucherMode ) { alert('Empty VoucherMode- trying to return'); return }
     // console.log('Rcvd CrntRec', CrntRec)
     // DispRecInAlert(CrntRec,'Rcvd CrntRec')
-
+    
     // if (CrntRec) {    AlertRec (CrntRec, 'crntRec');setOrderSheet(CrntRec)}
-    setOrderSheet(VoucherMode == 'Add' ? { ...CrntRec, ID: '', PicURL: '' } : CrntRec)
+    setOrderSheet(VoucherMode == 'Add' ? { ...CrntRec, _id:'', ID: '', PicURL: '' } : CrntRec)
     // document.getElementById('SelectPhoto').focus();
   }, [Need2Refresh]);
-
+  
+  if (!VoucherMode ) { alert('Empty VoucherMode- trying to return'); return }
 
   // ==============================================================
   //CLEAR Rec is clicked
@@ -69,7 +70,7 @@ export default function Page(props) {
   const HandleBtnSave = () => {
     // e.preventDefault();
 
-    // AlertRec(OrderSheet, 'Saving Data is Triggered :' + VoucherMode);
+    AlertRec(OrderSheet, 'Call2Action for Data is Triggered.  VoucherMode: ' + VoucherMode);
     switch (VoucherMode) {
       //case 'Edit': CallDotAPI2SaveUpdate(); break;
       case 'Add':
@@ -139,6 +140,8 @@ export default function Page(props) {
     setOrderSheet({ ...OrderSheet, PicURL: '', ImageFile: null })
   }
 
+
+
   const HandleOnChangeFileBrowser = async (e) => {
 
     // alert('setting file in Page')
@@ -156,6 +159,10 @@ export default function Page(props) {
 
   }
 
+  
+  
+  
+  
   // =======================================================================
   // ==================[  Fns: DATABASE/ API Handling ]=====================
   // =======================================================================
@@ -164,7 +171,7 @@ export default function Page(props) {
   // --------------------------------------------------------------------------------------------------------------------
 
   const CallNextAPI2SaveAddNew = async () => {
-    AlertRec(OrderSheet, 'Data Ready to Send')
+        AlertRec(OrderSheet, 'Data Ready to Send with VoucherMode:'+ VoucherMode)
     // const { Code, RecStatus, CatCode, Title, TitleU, TCode, Priority, Pic, PicURL, Unit, QtyDef, QtyInc, QtyStep, Price, Desc, Rem,  CrntBal, QtyMin, QtyMax } = OrderSheet
     // const { Id, Code, Title, CatCode, Desc, Rem, Pic, PicURL, PicURL4Edit, Unit, ShareRef, ShareDoc, Price, Price2, QtyDef, QtyInc, QtyStep, QtyMin, QtyMax, CrntBal, RecType, RecStatus, Priority, EntryBy, EntryDte } = OrderSheet
 
@@ -182,6 +189,8 @@ export default function Page(props) {
     //   toast.error('Code is invalid. \nPlz Check Code entry.', { theme: 'colored', autoClose: ToastWaitTime, })
     //   return
     // }
+
+
     if (!(OrderSheet.Title) || (OrderSheet.Title.trim() === '')) {
       toast.error('Title is invalid. \nPlz Check Title entry.', { theme: 'colored', autoClose: ToastWaitTime, })
       // <button type="button" onClick={() => handleShowAlert('error', 'Error', 'Showing error tailwind alert')}>Show Alert Error</button><br />      
@@ -194,9 +203,8 @@ export default function Page(props) {
     //   return
     // }
 
-
     const Data2SendInDatabase = {
-      "ID": OrderSheet.ID,
+      "ID": Number(OrderSheet.ID),
 
       // "RecType": RecType.substr(0, 10),         //RecType.Substring(0, Math.min(RecType.Length, 10)) ,
       // "RecStatus": RecStatus.substr(0, 10),
@@ -249,11 +257,13 @@ export default function Page(props) {
 
     let res = ''
     //=====[   READY to send data in Database   ]========  
-    // alert('Trying to Save :' + ID)
-    if (OrderSheet.ID <= 0) {
+    // if (OrderSheet.ID <= 0) {
+
+    if (!OrderSheet._id) {
       // ADD NEW-------------------------------------------------------
       // alert('Add New')
-      res = await axios.post(process.env.NEXT_PUBLIC_API_URL + `Products/${0}`,
+      // res = await axios.post(process.env.NEXT_PUBLIC_API_URL + `Products/${Number(OrderSheet.ID)}`,
+      res = await axios.post(process.env.NEXT_PUBLIC_API_URL + `Products`,
         { Data: Data2SendInDatabase }
       )
       toast.success(`Record Added Successfully: [${OrderSheet.Title} ]`, { theme: 'colored', autoClose: ToastWaitTime, position: "top-left" })
@@ -262,7 +272,7 @@ export default function Page(props) {
     else {
       // UPDATE-------------------------------------------------------
       // alert('Update')
-      res = await axios.put(process.env.NEXT_PUBLIC_API_URL + `Products/${ID}`,
+      res = await axios.put(process.env.NEXT_PUBLIC_API_URL + `Products/${Number(OrderSheet.ID)}`,
         { Data: Data2SendInDatabase }
       )
 
@@ -342,7 +352,7 @@ export default function Page(props) {
 
             {/* Input Descriptions  */}
             <div className=' mx-auto w-1/2 '>
-              <MyInputText Label='Item ID' Name='ID' Icon={<FaUserPlus className="w-6 h-6 text-gray-500 dark:text-gray-400" />} ReadOnly={true} Val={OrderSheet?.ID} setVal={HandleInputs} />
+              <MyInputText Label='Item ID' Name='ID' Icon={<FaUserPlus className="w-6 h-6 text-gray-500 dark:text-gray-400" />} ReadOnly={false} Val={OrderSheet?.ID} setVal={HandleInputs} />
             </div>
 
             {/* Divider Line */}

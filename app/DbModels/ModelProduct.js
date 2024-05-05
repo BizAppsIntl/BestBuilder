@@ -18,7 +18,7 @@ const schema = new Schema({
 
  ID:{type: Number} ,
  Title:{type: String} ,
- TempTitle:{type: String} ,
+ Cat:{type: String} ,
  Desc:{type: String} ,
  Rem:{type: String} ,
  PicURL:{type: String} ,

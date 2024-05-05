@@ -82,8 +82,8 @@ export const PUT = async function (req, route) {
   console.log(`\n\n****(UPDATE/PUT Request)***[at: ${new Date().toLocaleString()}]**********************************************************`)
   console.log('\nMODEL: ', ModelProduct)
   
-  console.log('-------[GET REC ] req:', req)
-  console.log('-------[GET REC ] route.params.id:', route.params.id)
+  console.log('-------[UPDATE REC ] req:', req)
+  console.log('-------[UPDATE REC ] route.params.id:', route.params.id)
   
   // console.log('-------[GET REC ]------------------------params', req.params)
   const body = await req.json()
@@ -94,7 +94,7 @@ export const PUT = async function (req, route) {
     // const rows = await ModelProduct.find({ ID: route.params.id  })
 
     // let Rec = await ModelProduct.findOneAndUpdate({ Code: req.params.Code }, req.body)
-    let Rec = await ModelProduct.updateOne({ ID: route.params.id }, body)
+    let Rec = await ModelProduct.updateOne({ ID: route.params.id }, body.Data)
     console.log('-----Updated Record: ', Rec)
     return NextResponse.json({Message: 'Updated  Successfully', Rec:Rec})
 

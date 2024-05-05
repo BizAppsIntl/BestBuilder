@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 
 import axios from "axios"
-import ToastContainerWrapper from '@/app/components/ToastContainerWrapper'
+// import ToastContainerWrapper from '@/app/components/ToastContainerWrapper'
 import { toast } from 'react-toastify';
 
 // import EntryFormProduct from './EntryFormProductMyTextInput'
@@ -26,7 +26,7 @@ import { AlertConfirm } from "@/app/Lib/StdLib"
 //   .then(data => { console.log('\n\n\n\n\n\n\nRECEIVED DATA IN ITS PLACE', res) })
 
 
-const REC_DEFAULT = { ID: '', IDx: '', Title: '', Cat: '', Desc: '', Rem: '', Unit: '', PPrice: '', SPrice: '', ImageURL: '', ImageFile: null }
+const REC_DEFAULT = { _id:'', ID: '', IDx: '', Title: '', Cat: '', Desc: '', Rem: '', Unit: '', PPrice: '', SPrice: '', ImageURL: '', ImageFile: null }
 
 
 export default function Page() {

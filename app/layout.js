@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 
 import TopNav from '@/app/components/Nav/TopNav'
-// import ToastContainerWrapper from "@/app/components/ToastContainerWrapper/ToastContainerWrapper";
+import ToastContainerWrapper from "@/app/components/ToastContainerWrapper/ToastContainerWrapper";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         <TopNav />
         {children}
 
-        {/* <ToastContainerWrapper/> */}
+        <ToastContainerWrapper/>
 
       </body>
     </html>
