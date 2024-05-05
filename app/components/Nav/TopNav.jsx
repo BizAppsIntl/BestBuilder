@@ -119,7 +119,7 @@ export default function TopNav() {
           <Link href='/'>
             <Image src={logo} width={0} height={25} alt="Logo" />
           </Link>
-          {CrntWindow.width} 6:52
+          {CrntWindow.width} 12:52
         </div>
 
 
@@ -128,7 +128,7 @@ export default function TopNav() {
 
           <Link href="/TestAPI" >TEST-API</Link>
           <Link href="/PrismaTesting" >Prisma Testing</Link>
-          <Link href="/Pages/Products" >Products</Link>
+          <Link href="/Products" >Products</Link>
           <Link href="/Services" >Services</Link>
           <Link href="/About" >About</Link>
           <Link href="/DatabaseTesting" >DatabaseTesting</Link>

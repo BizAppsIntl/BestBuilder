@@ -1,0 +1,211 @@
+// import pool from "../../mysql";
+import PoolConn from "../../mysql";
+
+// import  MySQL_Conn from "../mysql_conn";
+import { NextResponse } from "next/server";
+
+
+
+
+// ==============================================================
+//-----------[        POST Request to Get Rec - By Text/Title        ]
+// ==============================================================
+// router.get('/DB-Rec/:id', async (req, res) => {
+//  export async function GET(req, route) {   //  route.params.id
+
+// export async function GET(req, route) {   //  route.params.id
+// export const GetByTxt = async function (req, res) {
+export const GetByID = async function (req, res) {
+  console.log('-----------------[POST REC PurchaseDetail/D]------------------------params', req.params)
+  console.log('GetAll- post request Body: ', req.body);
+
+  // const keyword = req.body.Txt
+  //   ? {
+  //     $or: [
+  //       {
+  //         Name: {
+  //           $regex: req.body.Txt,
+  //           $options: 'i',
+  //         },
+  //       },
+  //       {
+  //         FName: {
+  //           $regex: req.body.Txt,
+  //           $options: 'i',
+  //         },
+  //       },
+  //     ],
+  //   }
+  //   : {}
+  // console.log('Keyword: ', keyword);
+
+  try {
+    //  $options: 'i' is used for Case insensitivity 
+    // const tempRec = await recTranD.find({
+    //   $or: [
+    //     { VCat: { $regex: req.body.VCat, $options: 'i' } },
+    //     { FName: { $regex: req.body.Txt, $options: 'i' } }
+    //   ]
+    // })
+
+    const Recs = await recItems.find({
+      $or: [
+        // { Title: { $regex: req.body.Title, $options: 'i' } }
+        { ID: { $regex: req.body.ID, $options: 'i' } }
+      ]
+    })
+    //    console.log('-----------------------------------------Got TranD: ', Recs)
+
+    res.status(201).send(Recs);
+  }
+  catch (e) {
+    console.log("ERROR" + e);
+    res.status(400).send(e);
+  }
+}
+
+
+// export async function GET(req, {params}) {
+export async function GET(req, route) {
+
+  // console.log(`\n\n\n\Making GET Request for Table: bb_items, [at: ${new Date().toLocaleString()}] with params = ${route} \n`)
+
+  try {
+    // const conn = await pool.getConnection();
+    // console.log('\n\n\n\Connected to the Database for GET', conn)
+
+
+
+    // const [rows] = await conn.query('SHOW TABLES FROM `bizapps_db`;')
+    //MySQL_Conn.query('select 1 + 2 as three;', (err, results)=>{
+
+    // const [rows] = await conn.query('SELECT * FROM `bb_items`;')
+    // const [rows] = await conn.query('SHOW TABLES FROM `defaultdb`;')
+
+    const [rows] = await PoolConn.query('SELECT * FROM bb_items WHERE ID = ? ', [route.params.id])
+    // const [rows] = await conn.query("SELECT * FROM bizapps_db.bb-items;")
+
+    console.log('\nFetched Data: ', rows, ' DataLength: ', rows.length, ' rows? true: false => ', rows.length > 0 ? 'true' : 'false')
+    return NextResponse.json(rows.length > 0 ? rows[0] : [])
+
+    //conn.release()
+  }
+  catch (error) {
+    console.log('\n\n\n\nERRRRRRRRROR in Fetching: ', error)
+    // throw error
+    NextResponse.json({ message: error.message }, { status: 500 })
+  }
+}
+
+
+export async function POST(req, route) {
+  console.log('POST IS CALLED with params: ', route.params.id)
+
+  try {
+    // const { ID, Title, Des, Rem, Unit, PPrice, SPrice} = await req.json()
+    // const Rec = await req.json()
+    // console.log('POST IS CALLED with: ', { ...Rec.Data })
+    // console.log('POST IS CALLED with: ', `( ${Rec.Data.ID}, '${Rec.Data.Title}', '${Rec.Data.Des}', '${Rec.Data.Rem}', '${Rec.Data.PicURL}', '${Rec.Data.Unit}', ${Rec.Data.PPrice}, ${Rec.Data.SPrice}, ${Rec.Data.CBal}, ${Rec.Data.PBal})`)
+
+    const Rec = { ...(await req.json()).Data }
+
+    // const result = await MySQL_Conn.query('INSERT INTO db_items SET ?',{...Rec.Data} )
+    // const {ID, Title, Des, Rem, Unit, PPrice, SPrice, CBal, PBal}= Rec.Data
+    // const result = await MySQL_Conn.query('INSERT INTO db_items SET ?', {ID, Title, Des, Rem, Unit, PPrice, SPrice, CBal, PBal})
+
+    // console.log({ID, Title, Des, Rem, Unit, PPrice, SPrice, CBal, PBal} )
+    // const result = await MySQL_Conn.query('INSERT INTO bb_items SET ?', {ID, Title, Des, Rem, Unit, PPrice, SPrice, CBal, PBal})
+
+    // const rows = await PoolConn.query(`INSERT INTO bb_items (ID, Title, Des, Rem, PicURL, Unit, PPrice, SPrice, CBal, PBal) VALUES ( 0, 'title', 'desc', 'rem', 'PicURL', 'unit', 101, 202, 111, 222)`)
+    // const rows = await PoolConn.query(`INSERT INTO bb_items (ID, Title, Des, Rem, PicURL, Unit, PPrice, SPrice, CBal, PBal) VALUES ( ${Rec.Data.ID}, '${Rec.Data.Title}', '${Rec.Data.Des}', '${Rec.Data.Rem}', '${Rec.Data.PicURL}', '${Rec.Data.Unit}', ${Rec.Data.PPrice}, ${Rec.Data.SPrice}, ${Rec.Data.CBal}, ${Rec.Data.PBal})`)
+
+    //ID = '${Rec.ID}', AutoIncrement
+    const rows = await PoolConn.query
+      (
+        `INSERT INTO bb_items SET 
+            Title = '${Rec.Title}', 
+            Des = '${Rec.Des}', 
+            Rem = '${Rec.Rem}', 
+            PicURL = '${Rec.PicURL}', 
+            Unit = '${Rec.Unit}', 
+            PPrice = ${Rec.PPrice}, 
+            SPrice = ${Rec.SPrice}, 
+            CBal = ${0}, 
+            PBal = ${0} 
+        `
+      )
+
+    console.log('RESOLVED Results:', rows)
+    return NextResponse.json(rows)
+  }
+  catch (error) {
+    return NextResponse.json({ message: error.message }, { status: 500 })
+  }
+}
+
+export async function PUT(req, route) {
+  console.log('PUT IS CALLED with params: ', route.params.id)
+
+  try {
+    // const { ID, Title, Des, Rem, Unit, PPrice, SPrice} = await req.json()
+    const Rec = { ...(await req.json()).Data }
+    //  console.log('POST IS CALLED with: ', Rec)
+    // console.log('POST IS CALLED with: ', { ...Rec.Data })
+
+    // const result = await MySQL_Conn.query('INSERT INTO db_items SET ?', {ID, Title, Des, Rem, Unit, PPrice, SPrice})
+    // const result = await MySQL_Conn.query('INSERT INTO db_items SET ?',{...Rec.Data} )
+
+    //const rows = await PoolConn.query(`INSERT INTO bb_items (ID, Title, Des, Rem, PicURL, Unit, PPrice, SPrice, CBal, PBal) VALUES ( 0, 'title', 'desc', 'rem', 'PicURL', 'unit', 101, 202, 111, 222)`)
+    //const rows = await PoolConn.query(`INSERT INTO bb_items (ID, Title, Des, Rem, PicURL, Unit, PPrice, SPrice, CBal, PBal) VALUES ( ${Rec.Data.ID}, '${Rec.Data.Title}', '${Rec.Data.Des}', '${Rec.Data.Rem}', '${Rec.Data.PicURL}', '${Rec.Data.Unit}', ${Rec.Data.PPrice}, ${Rec.Data.SPrice}, ${Rec.Data.CBal}, ${Rec.Data.PBal})`)
+    const rows = await PoolConn.query
+      (
+        `UPDATE bb_items SET 
+
+      Title = '${Rec.Title}', 
+      Des = '${Rec.Des}', 
+      Rem = '${Rec.Rem}', 
+      PicURL = '${Rec.PicURL}', 
+      Unit = '${Rec.Unit}', 
+      PPrice = ${Rec.PPrice}, 
+      SPrice = ${Rec.SPrice}, 
+      CBal = ${0}, 
+      PBal = ${0} 
+      
+      WHERE ID = ${Rec.ID} `
+      )
+
+    console.log('RESOLVED Results:', rows)
+    return NextResponse.json(rows)
+  }
+  catch (error) {
+    return NextResponse.json({ message: error.message }, { status: 500 })
+  }
+}
+
+
+// export async function GET(req, {params}) {
+export async function DELETE(req, route) {
+  console.log('RCVD for deletion Results:', route.params.id)
+
+  try {
+    // const rows = await PoolConn.query('DELETE FROM bb_items WHERE ID = ? ', 7)
+    // await PoolConn.query('DELETE FROM bb_items WHERE ID = ? ', route.params.id)
+
+    const res = await PoolConn.query('DELETE FROM bb_items WHERE ID = ? ', route.params.id)
+    // const [rows] = await conn.query("SELECT * FROM bizapps_db.bb-items;")
+
+    console.log('\nResult Data: ', res)
+    return NextResponse.json({ message: 'Deleted Successfully', status: 204 })
+
+    //conn.release()
+  }
+  catch (error) {
+    console.log('\n\n\n\nERRRRRRRRROR in Deleting: ', error)
+    // throw error
+    // return NextResponse.json({ message: "day night error"error.message }, { status: 500 })
+    return NextResponse.json({ message: "something is wrong in query" }, { status: 500 })
+  }
+}
+
+
+
