@@ -18,6 +18,7 @@ import ModelProduct from '@/app/DbModels/ModelProduct'
 // export const GetByTxt = async function (req, res) {
 
 export const GET = async function (req, route) {
+  return NextResponse.json({ReceivedInGetRequest_route_params_id: route.params.id})
 
 dbConnect()
 console.log(`\n\n****(GET Request)***[at: ${new Date().toLocaleString()}]**********************************************************`)
