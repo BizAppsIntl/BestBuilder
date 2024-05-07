@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 
 import dbConnect from '@/app/api/mongoDB_conn'
 // import { User } from '@/app/DbModels/UserModel'
-//import ModelProduct from '@/app/DbModels/ModelProduct'
+import ModelProduct from '@/app/DbModels/ModelProduct'
 
 // dbConnect()
 
@@ -17,12 +17,6 @@ export async function GET() {
     //console.log({ReceivedInGetRequest_route_params_id: route.params.id, UseRouter_query_slug: router.query.slug})
     // return NextResponse.json({Req: req, route: route, router: router})
     // return NextResponse.json({Req: req,  route: route})
-
-    
-
-
-
-
 
     
   // const connection = mongoose.createConnection('mongodb://127.0.0.1:27017/test');

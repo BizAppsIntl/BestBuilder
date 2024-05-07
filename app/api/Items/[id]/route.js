@@ -5,7 +5,7 @@ import dbConnect from '@/app/api/mongoDB_conn'
 // import { User } from '@/app/DbModels/UserModel'
 import ModelProduct from '@/app/DbModels/ModelProduct'
 
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
  
 // export default function Page() {
 //   const router = useRouter()
@@ -23,11 +23,12 @@ import { useRouter } from 'next/router'
 // export const GetByTxt = async function (req, res) {
 
 export const GET = async function (req, route) {
-  const router = useRouter()
+  // const router = useRouter()
   //   return <p>Post: {router.query.slug}</p>
-  console.log({ReceivedInGetRequest_route_params_id: route.params.id, UseRouter_query_slug: router.query.slug})
-  return NextResponse.json({Req: req, route: route, router: router})
+  // return NextResponse.json({ReceivedInGetRequest_route_params_id: route.params.id, UseRouter_query_slug: router.query.slug})
 
+// return NextResponse.json({Req: req, route: route})
+  
 dbConnect()
 console.log(`\n\n****(GET Request)***[at: ${new Date().toLocaleString()}]**********************************************************`)
 console.log('\nMODEL: ', ModelProduct)
