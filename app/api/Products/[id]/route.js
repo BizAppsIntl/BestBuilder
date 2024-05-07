@@ -27,7 +27,7 @@ export const GET = async function (req, route) {
   //   return <p>Post: {router.query.slug}</p>
   // return NextResponse.json({ReceivedInGetRequest_route_params_id: route.params.id, UseRouter_query_slug: router.query.slug})
 
-return NextResponse.json({Req: req, route: route})
+// return NextResponse.json({Req: req, route: route})
   
 dbConnect()
 console.log(`\n\n****(GET Request)***[at: ${new Date().toLocaleString()}]**********************************************************`)
