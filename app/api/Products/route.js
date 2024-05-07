@@ -1,13 +1,30 @@
 import { NextResponse } from 'next/server'
+// import { useRouter } from 'next/router'
 import mongoose from 'mongoose'
 
 import dbConnect from '@/app/api/mongoDB_conn'
 // import { User } from '@/app/DbModels/UserModel'
-import ModelProduct from '@/app/DbModels/ModelProduct'
+//import ModelProduct from '@/app/DbModels/ModelProduct'
 
 // dbConnect()
 
 export async function GET() {
+  // export const GET = async function (req, route) {
+  // export const GET = async function (req, route) {
+    // const router = useRouter()
+    //   return <p>Post: {router.query.slug}</p>
+    // console.log({ReceivedInGetRequest_route_params_id: req, route})
+    //console.log({ReceivedInGetRequest_route_params_id: route.params.id, UseRouter_query_slug: router.query.slug})
+    // return NextResponse.json({Req: req, route: route, router: router})
+    // return NextResponse.json({Req: req,  route: route})
+
+    
+
+
+
+
+
+    
   // const connection = mongoose.createConnection('mongodb://127.0.0.1:27017/test');
   dbConnect()
   console.log(`\n\n****(GET ALL Request)***[at: ${new Date().toLocaleString()}]**********************************************************`)
