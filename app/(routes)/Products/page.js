@@ -53,7 +53,7 @@ export default function Page() {
 
 
   const GetData = async () => {
-    alert('Get Data is Pressed with btnStatus: '+btnStatus)
+    alert('Get Data is Pressed with ')
 
     // fetch('api/Products', { method: 'GET' })
     //   .then(res => {
