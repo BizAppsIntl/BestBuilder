@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import EntryFormProduct from './EntryFormProduct'
 import { FaUserEdit, FaUserPlus } from "react-icons/fa"
 import { HiFire, HiOutlineExclamationCircle } from "react-icons/hi";
-import { AlertConfirm } from "@/app/Lib/StdLib"
+import { AlertConfirm, AlertRec } from "@/app/Lib/StdLib"
 // import StandardInputPage from "./StandardInputPage";
 
 //import {GET} from '@app/api/items-pool/route.js'
@@ -26,7 +26,7 @@ import { AlertConfirm } from "@/app/Lib/StdLib"
 //   .then(data => { console.log('\n\n\n\n\n\n\nRECEIVED DATA IN ITS PLACE', res) })
 
 
-const REC_DEFAULT = { _id:'', ID: '', IDx: '', Title: '', Cat: '', Desc: '', Rem: '', Unit: '', PPrice: '', SPrice: '', ImageURL: '', ImageFile: null }
+const REC_DEFAULT = { _id: '', ID: '', IDx: '', Title: '', Cat: '', Desc: '', Rem: '', Unit: '', PPrice: '', SPrice: '', ImageURL: '', ImageFile: null }
 
 
 export default function Page() {
@@ -53,6 +53,8 @@ export default function Page() {
 
 
   const GetData = async () => {
+    alert('Get Data is Pressed with btnStatus: '+btnStatus)
+
     // fetch('api/Products', { method: 'GET' })
     //   .then(res => {
     //     res.json();
@@ -69,6 +71,7 @@ export default function Page() {
     const result = await axios.get(process.env.NEXT_PUBLIC_API_URL + 'Products')
     // console.log(`***************** ${process.env.NEXT_PUBLIC_API_URL} result: `, result); alert(result.data)
 
+    AlertRec(result.data)
     setRecs(result.data)
 
   }
@@ -220,43 +223,11 @@ export default function Page() {
         } */}
 
         {!(BtnEditClicked || BtnAddnewClicked) &&
-          <Button className="flex flex-col gap-2" size="xs" onClick={() => { HandleBtnClickedMode('Add', true)            }}         >
+          <Button className="flex flex-col gap-2" size="xs" onClick={() => { HandleBtnClickedMode('Add', true) }}         >
             <FaUserPlus className='h-5 w-5' />
             <span>Add New Product</span>
           </Button>
         }
-
-        {/* me-2 mb-2 py-2.5  px-5 py-2*/}
-        <button type="button"
-          className="
-          flex gap-2 items-center justify-center
-                    text-white 
-                    text-sm  hover:text-xl
-                     h-10 w-32
-                    font-medium 
-                    rounded-lg 
-                    bg-teal-600 hover:bg-teal-800 
-                    focus:ring-4 focus:ring-teal-300 
-                    focus:outline-none 
-
-                  ">
-          <FaUserPlus className='h-6 w-6' />
-          CustomSize
-        </button>
-
-        <button type="button"
-          className=" flex gap-2 items-center justify-center   text-white 
-                    text-sm  hover:text-xl
-                     h-10 w-32
-                    font-medium 
-                    rounded-lg 
-                    bg-blue-600 hover:bg-blue-700 
-                    focus:ring-4 focus:ring-blue-300 
-                    focus:outline-none 
-                    ">
-          <FaUserPlus className='h-6 w-6' />
-          CSS controled
-        </button>
 
         <button className='w-36 h-12 flex gap-2 items-center justify-center rounded-lg border border-gray-400 bg-gray-300  hover:bg-gray-300 hover:text-xl' onClick={() => { HandleBtnClickedMode('Add', true) }}>
           <FaUserPlus size={24} /> Reset
@@ -269,8 +240,6 @@ export default function Page() {
           <Button size="sm" onClick={GetData}> <FaUserPlus className='mr-2 h-5 w-5' />Refresh Page</Button>
         }
 
-        <Button size="md" onClick={() => setOpenModal(true)}>Toggle Standard modal</Button>
-        <Button size="lg" onClick={() => setOpenModal4Product(true)}>Product modal</Button>
       </div>
 
       {/* Only if ADD-NEW/Update is Clicked */}
@@ -356,6 +325,59 @@ export default function Page() {
           })}
         </tbody>
       </table>
+
+
+
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <div >
+        Button Samples
+        <div>
+          <div className="flex ">
+
+            {/* me-2 mb-2 py-2.5  px-5 py-2*/}
+            <button type="button"
+              className="
+          flex gap-2 items-center justify-center
+                    text-white 
+                    text-sm  hover:text-xl
+                     h-10 w-32
+                    font-medium 
+                    rounded-lg 
+                    bg-teal-600 hover:bg-teal-800 
+                    focus:ring-4 focus:ring-teal-300 
+                    focus:outline-none 
+
+                  ">
+              <FaUserPlus className='h-6 w-6' />
+              CustomSize
+            </button>
+
+            <button type="button"
+              className=" flex gap-2 items-center justify-center   text-white 
+                    text-sm  hover:text-xl
+                     h-10 w-32
+                    font-medium 
+                    rounded-lg 
+                    bg-blue-600 hover:bg-blue-700 
+                    focus:ring-4 focus:ring-blue-300 
+                    focus:outline-none 
+                    ">
+              <FaUserPlus className='h-6 w-6' />
+              CSS controled
+            </button>
+          </div>
+          <div>
+            <Button size="md" onClick={() => setOpenModal(true)}>Toggle Standard modal</Button>
+            <Button size="lg" onClick={() => setOpenModal4Product(true)}>Product modal</Button>
+
+          </div>
+        </div>
+
+      </div>
 
 
       {/* START *************     STANDARD MODAL ********************************/}
@@ -547,6 +569,7 @@ export default function Page() {
           </div>
         </Modal.Body>
       </Modal>
+
 
 
 
