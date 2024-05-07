@@ -199,6 +199,7 @@ export default function Page() {
   return (
     <div>
       {/* <pre>RecCount={Recs.length}<br /> {JSON.stringify({ RecordsReceived: Recs }, null, 2)}</pre> */}
+      process.env.NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL}
 
       <button onClick={notify}>Notify</button>
       <div>
