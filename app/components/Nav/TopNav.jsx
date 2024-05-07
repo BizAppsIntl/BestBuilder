@@ -119,7 +119,7 @@ export default function TopNav() {
           <Link href='/'>
             <Image src={logo} width={0} height={25} alt="Logo" />
           </Link>
-          {CrntWindow.width} 07 May2024, 10:55am
+          {CrntWindow.width} 07 May2024, 12:00pm
         </div>
 
 
